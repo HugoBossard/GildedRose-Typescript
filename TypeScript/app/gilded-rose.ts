@@ -52,15 +52,13 @@ export class GildedRose {
         this.items[i].quality -= 1;
 
         if (itemNameIsBackstagePasses(i)) {
-          if (itemQualityBellowFifty(i)) {
-            if (this.items[i].sellIn < 6) {
-              this.items[i].quality += 2;
-              continue;
-            }
+          if (this.items[i].sellIn < 6) {
+            this.items[i].quality += 2;
+            continue;
+          }
 
-            if (this.items[i].sellIn < 11 ) {
-              this.items[i].quality += 1;
-            }
+          if (this.items[i].sellIn < 11 ) {
+            this.items[i].quality += 1;
           }
         }
       }
