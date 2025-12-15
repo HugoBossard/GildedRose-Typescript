@@ -42,9 +42,7 @@ export class GildedRose {
     for (let i = 0; i < this.items.length; i++) {
       if (!itemNameIsAgedBrie(i) && !itemNameIsBackstagePasses(i)) {
         if (itemQualityUpperZero(i) && itemNameIsNotSulfuras(i)) {
-          this.items[i].sellIn -= 1;
           this.items[i].quality -= 1;
-          continue;
         }
       }
       
@@ -53,8 +51,7 @@ export class GildedRose {
 
         if (itemNameIsBackstagePasses(i)) {
           if (this.items[i].sellIn < 6) {
-            this.items[i].quality += 2;
-            continue;
+            this.items[i].quality += 1;
           }
 
           if (this.items[i].sellIn < 11 ) {
@@ -72,11 +69,11 @@ export class GildedRose {
           this.items[i].quality += 1;
           continue;
         }
-        
+
         if (itemNameIsBackstagePasses(i)) {
           this.items[i].quality = 0;
           continue;
-        } 
+        }
 
         if (itemQualityUpperZero(i) && itemNameIsNotSulfuras(i)) {
           this.items[i].quality -= 1;
