@@ -13,7 +13,7 @@ export class Item {
 export class GildedRose {
   items: Array<Item>;
 
-  constructor(items = [] as Array<Item>) {
+  constructor(items: Array<Item>) {
     this.items = items;
   }
 
@@ -38,14 +38,9 @@ export class GildedRose {
       return item.quality > 0;
     }
 
-
+    
     for (const item of this.items) {
-      if (!itemNameIsAgedBrie(item) && !itemNameIsBackstagePasses(item)) {
-        if (itemQualityUpperZero(item) && itemNameIsNotSulfuras(item)) {
-          item.quality -= 1;
-        }
-      } 
-      else {
+      if (itemNameIsAgedBrie(item) || itemNameIsBackstagePasses(item)) {
         if (itemQualityBellowFifty(item)) {
           item.quality += 1;
 
@@ -60,28 +55,30 @@ export class GildedRose {
           }
         }
       }
+      else {
+        if (itemQualityUpperZero(item) && itemNameIsNotSulfuras(item)) {
+          item.quality -= 1;
+        }
+      }
 
       if (itemNameIsNotSulfuras(item)) {
         item.sellIn -= 1;
       }
 
       if (item.sellIn < 0) {
-        if (itemQualityBellowFifty(item)) {
+        if (itemNameIsAgedBrie(item) && itemQualityBellowFifty(item)) {
           item.quality += 1;
           continue;
         }
-
-        if (!itemNameIsAgedBrie(item)) {
-          if (!itemNameIsBackstagePasses(item)) {
-            if (itemQualityUpperZero(item) && itemNameIsNotSulfuras(item)) {
-              item.quality -= 1;
-              continue;
-            }
-          }
-            
-          item.quality = 0;
-        } 
         
+        if (itemNameIsBackstagePasses(item)) {
+          item.quality = 0;
+          continue;
+        }
+
+        if (itemQualityUpperZero(item) && itemNameIsNotSulfuras(item)) {
+          item.quality -= 1;
+        }
       }
     }
 
