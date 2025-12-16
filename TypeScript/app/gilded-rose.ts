@@ -18,65 +18,65 @@ export class GildedRose {
   }
 
   updateQuality() {
-    const itemNameIsAgedBrie = (i: number): boolean => {
-      return this.items[i].name == 'Aged Brie';
+    const itemNameIsAgedBrie = (item: Item): boolean => {
+      return item.name == 'Aged Brie';
     }
 
-    const itemNameIsBackstagePasses = (i: number): boolean => {
-      return this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert';
+    const itemNameIsBackstagePasses = (item: Item): boolean => {
+      return item.name == 'Backstage passes to a TAFKAL80ETC concert';
     }
 
-    const itemNameIsNotSulfuras = (i: number): boolean => {
-      return this.items[i].name != 'Sulfuras, Hand of Ragnaros';
+    const itemNameIsNotSulfuras = (item: Item): boolean => {
+      return item.name != 'Sulfuras, Hand of Ragnaros';
     }
 
-    const itemQualityBellowFifty = (i: number): boolean => {
-      return this.items[i].quality < 50
+    const itemQualityBellowFifty = (item: Item): boolean => {
+      return item.quality < 50
     }
 
-    const itemQualityUpperZero = (i: number): boolean => {
-      return this.items[i].quality > 0;
+    const itemQualityUpperZero = (item: Item): boolean => {
+      return item.quality > 0;
     }
 
 
-    for (let i = 0; i < this.items.length; i++) {
-      if (!itemNameIsAgedBrie(i) && !itemNameIsBackstagePasses(i)) {
-        if (itemQualityUpperZero(i) && itemNameIsNotSulfuras(i)) {
-          this.items[i].quality -= 1;
+    for (const item of this.items) {
+      if (!itemNameIsAgedBrie(item) && !itemNameIsBackstagePasses(item)) {
+        if (itemQualityUpperZero(item) && itemNameIsNotSulfuras(item)) {
+          item.quality -= 1;
         }
       }
       
-      if (itemQualityBellowFifty(i)) {
-        this.items[i].quality -= 1;
+      if (itemQualityBellowFifty(item)) {
+        item.quality -= 1;
 
-        if (itemNameIsBackstagePasses(i)) {
-          if (this.items[i].sellIn < 6) {
-            this.items[i].quality += 1;
+        if (itemNameIsBackstagePasses(item)) {
+          if (item.sellIn < 6) {
+            item.quality += 1;
           }
 
-          if (this.items[i].sellIn < 11 ) {
-            this.items[i].quality += 1;
+          if (item.sellIn < 11 ) {
+            item.quality += 1;
           }
         }
       }
 
-      if (itemNameIsNotSulfuras(i)) {
-        this.items[i].sellIn -= 1;
+      if (itemNameIsNotSulfuras(item)) {
+        item.sellIn -= 1;
       }
 
-      if (this.items[i].sellIn < 0) {
-        if (itemNameIsAgedBrie(i) && itemQualityBellowFifty(i)) {
-          this.items[i].quality += 1;
+      if (item.sellIn < 0) {
+        if (itemNameIsAgedBrie(item) && itemQualityBellowFifty(item)) {
+          item.quality += 1;
           continue;
         }
 
-        if (itemNameIsBackstagePasses(i)) {
-          this.items[i].quality = 0;
+        if (itemNameIsBackstagePasses(item)) {
+          item.quality = 0;
           continue;
         }
 
-        if (itemQualityUpperZero(i) && itemNameIsNotSulfuras(i)) {
-          this.items[i].quality -= 1;
+        if (itemQualityUpperZero(item) && itemNameIsNotSulfuras(item)) {
+          item.quality -= 1;
         }
       }
     }
