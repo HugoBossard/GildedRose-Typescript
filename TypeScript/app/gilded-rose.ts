@@ -44,36 +44,44 @@ export class GildedRose {
         if (itemQualityUpperZero(item) && itemNameIsNotSulfuras(item)) {
           item.quality -= 1;
         }
-      }
-      
-      if (itemQualityBellowFifty(item)) {
-        item.quality -= 1;
+      } 
+      else {
+        if (itemQualityBellowFifty(item)) {
+          item.quality += 1;
 
-        if (itemNameIsBackstagePasses(item)) {
-          if (item.sellIn < 6) {
-            item.quality += 1;
-          }
+          if (itemNameIsBackstagePasses(item)) {
+            if (item.sellIn < 11) {
+              item.quality += 1;
+            }
 
-          if (item.sellIn < 11 ) {
-            item.quality += 1;
+            if (item.sellIn < 6) {
+              item.quality += 1;
+            }
           }
         }
       }
 
+      if (itemNameIsNotSulfuras(item)) {
+        item.sellIn -= 1;
+      }
+
       if (item.sellIn < 0) {
-        if (itemNameIsAgedBrie(item) && itemQualityBellowFifty(item)) {
+        if (itemQualityBellowFifty(item)) {
           item.quality += 1;
           continue;
         }
 
-        if (itemNameIsBackstagePasses(item)) {
+        if (!itemNameIsAgedBrie(item)) {
+          if (!itemNameIsBackstagePasses(item)) {
+            if (itemQualityUpperZero(item) && itemNameIsNotSulfuras(item)) {
+              item.quality -= 1;
+              continue;
+            }
+          }
+            
           item.quality = 0;
-          continue;
-        }
-
-        if (itemQualityUpperZero(item) && itemNameIsNotSulfuras(item)) {
-          item.quality -= 1;
-        }
+        } 
+        
       }
     }
 
