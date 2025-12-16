@@ -60,10 +60,6 @@ export class GildedRose {
         }
       }
 
-      if (itemNameIsNotSulfuras(item)) {
-        item.sellIn -= 1;
-      }
-
       if (item.sellIn < 0) {
         if (itemNameIsAgedBrie(item) && itemQualityBellowFifty(item)) {
           item.quality += 1;
